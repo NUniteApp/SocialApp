@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, TextInput, View, TouchableOpacity } from "reac
 import { windowHeight, windowWidth } from "../../utils/DeviceDimensions";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-function PasswordRecoveryScreen(props) {
+function EmailConfirmationScreen(props) {
   return (
     <View style={styles.container}>
       {/* View for the image*/}
@@ -13,56 +13,27 @@ function PasswordRecoveryScreen(props) {
           source={require("../../assets/Logo_NUnite.png")}
         />
       </View>
-      <Text style={[styles.text, { marginTop: 20, marginBottom: 20 }]}>Password Recovery</Text>
+      <Text style={[styles.text, { marginTop: 20, marginBottom: 20 }]}>Email Confirmation</Text>
 
-      <View style={{width: (windowWidth * .90)}}>
-        <Text style={styles.text}>University Email</Text>
-        <View style={styles.inputSection}>
-          <Icon style={styles.inputIcon} name="envelope" size={20} color="#000" />
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-
-            underlineColorAndroid="transparent"
-          />
-        </View>
-
-          <Text style={[styles.text, {} ]}>* We will send you a link to change your password to your university email. </Text>
-
+      <View style={{marginLeft: (windowWidth * .05), marginRight: (windowWidth * .05) }}>
+        <Text style={[styles.text, {marginBottom: 20}]}>We have sent you an email with a link
+          that will take you to a page where you
+          can change the details you have forgotten.
+        </Text>
+        <Text style={styles.text}>
+          Once you have changed them, use the back
+          arrow to return to the login page and enter
+          your new details.
+        </Text>
 
       </View>
-      <View style={{ marginTop: 35 }}>
-        <Text style={styles.text}>Username</Text>
-        <View style={styles.inputSection}>
-          <Icon style={styles.inputIcon} name="key" size={20} color="#000" />
-          <TextInput
-            style={styles.input}
-            placeholder="Enter Your Username"
-
-            underlineColorAndroid="transparent"
-          />
-        </View>
-        <TouchableOpacity onPress={
-          () => {
-            props.navigation.navigate("UsernameRecoveryScreen");
-          }
-        }>
-          <Text style={[styles.text, { textDecorationLine: "underline" } ]}>Forgot your username?</Text>
-        </TouchableOpacity>
-      </View>
-
-      <TouchableOpacity style={styles.button} onPress={() => {
-        props.navigation.navigate("EmailConfirmationScreen");
-      }}>
-        <Text style={styles.text_black}> Send Email </Text>
-      </TouchableOpacity>
 
     </View>
 
 
   );
 };
-export default PasswordRecoveryScreen;
+export default EmailConfirmationScreen;
 
 const styles = StyleSheet.create({
   container: {
