@@ -17,21 +17,65 @@ import EmailConfirmationScreen from "../screens/auth-screens/EmailConfirmationSc
 // Imports for main tab screens
 import HomeScreen from "../screens/app-screens/home/HomeScreen";
 import ChatsScreen from "../screens/app-screens/chat/ChatsScreen";
-import ProfileScreen from "../screens/app-screens/profile/ProfileScreen";
+
 import TenancyScreen from "../screens/app-screens/tenancy/TenancyScreen";
 
 // Context Imports
 import { AuthContext } from "./AuthContext";
+import GenericPostScreen from "../screens/app-screens/home/GenericPostScreen";
+import PostOptionsScreen from "../screens/app-screens/home/PostOptionsScreen";
 
+
+// Profile Screens
+import ProfileScreen from "../screens/app-screens/profile/ProfileScreen";
+import EditProfileScreen from "../screens/app-screens/profile/EditProfileScreen";
+import FriendsListScreen from "../screens/app-screens/profile/FriendsListScreen";
+import DeleteAccountScreen from "../screens/app-screens/profile/DeleteAccountScreen";
+import ManagePostsScreen from "../screens/app-screens/profile/ManagePostsScreen";
+import SearchProfileScreen from "../screens/app-screens/profile/SearchProfileScreen";
 
 // Initialize Navigators
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
+const BottomTab = createBottomTabNavigator();
 
+const HomeStack = createStackNavigator();
+const ProfileStack = createStackNavigator();
+const TenancyStack = createStackNavigator();
+
+
+
+const navOptionHandler = () => ({
+  headerShown: false
+});
+
+function StackHome() {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen name="Home" component={HomeScreen} />
+      <HomeStack.Screen name="Generic Post" component={GenericPostScreen} />
+      <HomeStack.Screen name="Post Options" component={PostOptionsScreen} />
+
+    </HomeStack.Navigator>
+  )
+}
+
+function StackProfile() {
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen name="Profile" component={ProfileScreen} />
+      <ProfileStack.Screen name="Edit Profile" component={EditProfileScreen} />
+      <ProfileStack.Screen name="Post Options" component={PostOptionsScreen} />
+      <ProfileStack.Screen name="Friend Lists" component={FriendsListScreen} />
+    </ProfileStack.Navigator>
+  )
+}
 
 function Routes(props) {
 
   const { authState, restoreToken } = useContext(AuthContext);
+
+
+
 
   // Similar to componentDidMount method i.e. useEffect
   useEffect(() => {
@@ -64,18 +108,18 @@ function Routes(props) {
 
   function StartApp() {
     return (
-      <Tab.Navigator
+      <BottomTab.Navigator
         tabBarOptions={{
           activeTintColor: '#050505',
         }}>
-        <Tab.Screen name="Home" component={HomeScreen}
+        <BottomTab.Screen name="Home" children={StackHome}
                     options={{
                       tabBarLabel: 'Home',
                       tabBarIcon: () => (
                         <Icon name="home" size={30} color="#050505" />
                       ),
                     }}/>
-        <Tab.Screen name="Chat" component={ChatsScreen}
+        <BottomTab.Screen name="Chat" component={ChatsScreen}
                     options={{
                       tabBarLabel: 'Chat',
                       tabBarIcon: () => (
@@ -83,21 +127,21 @@ function Routes(props) {
                       ),
                     }}
         />
-        <Tab.Screen name="Profile" component={ProfileScreen}
+        <BottomTab.Screen name="Profile" component={StackProfile}
                     options={{
                       tabBarLabel: 'Profile',
                       tabBarIcon: () => (
                         <Icon name="user" size={30} color="#050505" solid/>
                       ),
                     }}/>
-        <Tab.Screen name="Tenancy" component={TenancyScreen}
+        <BottomTab.Screen name="Tenancy" component={TenancyScreen}
                     options={{
                       tabBarLabel: 'Tenancy',
                       tabBarIcon: () => (
                         <Icon name="door-open" size={30} color="#050505" solid/>
                       ),
                     }}/>
-      </Tab.Navigator>
+      </BottomTab.Navigator>
     )
   }
 
@@ -127,7 +171,7 @@ function Routes(props) {
             </>
           ) : (
             <>
-              <Stack.Screen name="Home" component={StartApp} />
+              <Stack.Screen name="Home" component={StartApp} options={navOptionHandler} />
             </>
           ) }
 

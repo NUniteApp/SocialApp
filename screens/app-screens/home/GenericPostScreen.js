@@ -1,8 +1,9 @@
 import React from "react";
+import {Text} from "react-native";
 
 function GenericPostScreen(props) {
   return (
-    <div></div>
+    <Text>Generic Post</Text>
   );
 }
 

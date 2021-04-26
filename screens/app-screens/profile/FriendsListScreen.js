@@ -4,7 +4,7 @@ import {Text} from "react-native";
 
 function FriendsListScreen(props) {
   return (
-    <div></div>
+    <Text>Friend Lists Screen</Text>
   );
 }
 

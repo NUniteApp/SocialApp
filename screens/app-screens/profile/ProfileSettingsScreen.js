@@ -4,7 +4,7 @@ import {Text} from "react-native";
 
 function ProfileSettingsScreen(props) {
   return (
-    <div></div>
+    <Text>Profile Setting Screen</Text>
   );
 }
 
