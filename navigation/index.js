@@ -1,11 +1,17 @@
 import React from "react";
-import {Text} from "react-native";
 import Routes from './Routes';
-
+import { AuthContextProvider} from "./AuthContext";
+import { AuthHelperContextProvider } from "./AuthHelperContext";
 
 function Providers(props) {
   return (
-    <Routes />
+    <AuthHelperContextProvider>
+      <AuthContextProvider>
+        <Routes />
+      </AuthContextProvider>
+    </AuthHelperContextProvider>
+
+
   );
 }
 

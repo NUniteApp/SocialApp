@@ -1,8 +1,9 @@
 import React from "react";
+import {Text} from 'react-native';
 
 function ChatsScreen(props) {
   return (
-    <div></div>
+    <Text>This is the chat screen</Text>
   );
 }
 

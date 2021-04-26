@@ -4,6 +4,9 @@ import { windowHeight, windowWidth } from "../../utils/DeviceDimensions";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+// get the Auth Context
+import { AuthContext } from "../../navigation/AuthContext";
+
 function SignupScreen(props) {
   return (
     <View style={styles.container} >
@@ -36,7 +39,6 @@ function SignupScreen(props) {
           <TextInput
             style={styles.input}
             placeholder="Enter Email Address"
-
             underlineColorAndroid="transparent"
           />
         </View>
@@ -49,8 +51,8 @@ function SignupScreen(props) {
           <TextInput
             style={styles.input}
             placeholder="Enter Your Password"
-
             underlineColorAndroid="transparent"
+            secureTextEntry
           />
         </View>
 
@@ -62,8 +64,8 @@ function SignupScreen(props) {
           <TextInput
             style={styles.input}
             placeholder="Confirm Password"
-
             underlineColorAndroid="transparent"
+            secureTextEntry
           />
         </View>
 
