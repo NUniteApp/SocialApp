@@ -12,6 +12,7 @@ export const AuthHelperContext = createContext();
 export const AuthHelperContextProvider = ({ children }) => {
   const getUserTokenUserId = async (userTokenVal) => {
     let user_id = null;
+    let user_name = null;
     try {
       // const userTokenVal = await AsyncStorage.getItem("payment-app-token");
 
@@ -25,7 +26,7 @@ export const AuthHelperContextProvider = ({ children }) => {
             },
           );
           user_id = res.payload.user_id;
-
+          user_name = res.payload.username;
           console.log(res);
         } catch (errorInToken) {
           console.log(errorInToken);
@@ -35,7 +36,13 @@ export const AuthHelperContextProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
     }
-    return user_id;
+
+    let user = {
+      user_id: user_id,
+      user_name: user_name
+
+    }
+    return user;
   };
 
   const value = { getUserTokenUserId };

@@ -62,7 +62,7 @@ function StackHome() {
 function StackProfile() {
   return (
     <ProfileStack.Navigator>
-      <ProfileStack.Screen name="Profile" component={ProfileScreen} />
+      <ProfileStack.Screen name="My Profile" component={ProfileScreen} />
       <ProfileStack.Screen name="Edit Profile" component={EditProfileScreen} />
       <ProfileStack.Screen name="Post Options" component={PostOptionsScreen} />
       <ProfileStack.Screen name="Friend Lists" component={FriendsListScreen} />

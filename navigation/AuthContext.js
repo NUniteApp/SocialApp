@@ -9,7 +9,8 @@ const initialState = {
   isLoading: true,
   isSignout: false,
   userToken: null,
-  userId: null
+  userId: null,
+  userName: null
 };
 
 
@@ -26,7 +27,8 @@ const reducer = (state, action) => {
       ...state,
       userToken: action.token,
       isLoading: false,
-      userId: action.userId
+      userId: action.userId,
+      userName: action.userName
     };
   }
   if (action.type === SIGN_IN) {
@@ -34,7 +36,8 @@ const reducer = (state, action) => {
       ...state,
       isSignout: false,
       userToken: action.token,
-      userId: action.userId
+      userId: action.userId,
+      userName: action.userName
     };
   }
   if (action.type === SIGN_OUT) {
@@ -42,7 +45,8 @@ const reducer = (state, action) => {
       ...state,
       isSignout: true,
       userToken: null,
-      userId: null
+      userId: null,
+      userName: null
     };
   }
 };
@@ -61,9 +65,10 @@ export const AuthContextProvider = ({children}) => {
       console.log(error);
     }
     // Save the token in the state
-    let userId = await getUserTokenUserId(data.authToken);
-    console.log(userId + " 123");
-    dispatch({ type: SIGN_IN, token: data.authToken, userId: userId });
+    let user = await getUserTokenUserId(data.authToken);
+    console.log(user.user_id + " 123");
+    dispatch({ type: SIGN_IN, token: data.authToken,
+      userId: user.user_id , userName: user.user_name});
     return true;
   };
 
@@ -78,8 +83,9 @@ export const AuthContextProvider = ({children}) => {
 
   const restoreToken = async (userToken) => {
 
-    let userId = await getUserTokenUserId(userToken);
-    dispatch({ type: RESTORE_TOKEN, token: userToken , userId: userId });
+    let user = await getUserTokenUserId(userToken);
+    dispatch({ type: RESTORE_TOKEN, token: userToken ,
+      userId: user.user_id, userName: user.user_name });
     return true;
   }
 
