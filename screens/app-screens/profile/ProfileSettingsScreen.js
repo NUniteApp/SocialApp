@@ -1,11 +1,21 @@
 import React from "react";
-import {Text} from "react-native";
+import {View, Text, StyleSheet} from "react-native";
+import RadioInput from "../../../components/radioInput";
 
 
 function ProfileSettingsScreen(props) {
+  // const [checked, setChecked] = React.useState('first');
   return (
-    <Text>Profile Setting Screen</Text>
+    <View style={styles.container}>
+      <RadioInput />
+    </View>
   );
 }
 
 export default ProfileSettingsScreen;
+const styles = StyleSheet.create({
+  container: {
+
+  }
+
+});

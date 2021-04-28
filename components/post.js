@@ -5,56 +5,61 @@ import { windowHeight, windowWidth } from "../utils/DeviceDimensions";
 
 function Post(props) {
   return (
-  <ScrollView>
-    <TouchableOpacity
-      onPress={() => {
-        props.navigation.navigate("Generic Post");
-      }} >
+    <ScrollView>
+
       <View style={styles.postView}>
         {/* View for post options */}
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+          props.navigation.navigate("Post Options");
+        }}>
           <View style={styles.optionsIconView}>
             <Icon name="ellipsis-h" size={30} color="gray" />
           </View>
         </TouchableOpacity>
-        {/* View for the image */}
-        <View style={styles.postImageView}>
-          <Image source={require("../assets/img.png")} resizeMode="cover" style={styles.postImage} />
-        </View>
-        {/* Type of Post and Date / Time View */}
-        <View style={styles.postInfoView}>
-          {/* View for the type of post */}
-          <View style={styles.postTypeView}>
-            <Text> Generic Post </Text>
-          </View>
-          {/* View for the date / time  */}
-          <View style={styles.postDateTimeView}>
-            <Text style={styles.postDateTimeText}> Today 10:30 </Text>
-          </View>
-        </View>
-        {/* View for the post text */}
-        <View style={styles.postTextView}>
-          <Text>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-            industry's standard dummy text ever since the 1500s
-          </Text>
-        </View>
-        {/* View for the postRelatedIcons */}
-        <View style={styles.postRelatedIconsView}>
-          <TouchableOpacity>
-            <Icon style={styles.iconViewStyle} name="heart" size={30} color="gray" />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Icon style={styles.iconViewStyle} name="comments" size={30} color="gray" />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Icon style={styles.iconViewStyle} name="share" size={30} color="gray" />
-          </TouchableOpacity>
 
-        </View>
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate("Generic Post");
+          }}>
+          {/* View for the image */}
+          <View style={styles.postImageView}>
+            <Image source={require("../assets/img.png")} resizeMode="cover" style={styles.postImage} />
+          </View>
+          {/* Type of Post and Date / Time View */}
+          <View style={styles.postInfoView}>
+            {/* View for the type of post */}
+            <View style={styles.postTypeView}>
+              <Text> Generic Post </Text>
+            </View>
+            {/* View for the date / time  */}
+            <View style={styles.postDateTimeView}>
+              <Text style={styles.postDateTimeText}> Today 10:30 </Text>
+            </View>
+          </View>
+          {/* View for the post text */}
+          <View style={styles.postTextView}>
+            <Text>
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+              industry's standard dummy text ever since the 1500s
+            </Text>
+          </View>
+          {/* View for the postRelatedIcons */}
+          <View style={styles.postRelatedIconsView}>
+            <TouchableOpacity>
+              <Icon style={styles.iconViewStyle} name="heart" size={30} color="gray" />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Icon style={styles.iconViewStyle} name="comments" size={30} color="gray" />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Icon style={styles.iconViewStyle} name="share" size={30} color="gray" />
+            </TouchableOpacity>
+
+          </View>
+        </TouchableOpacity>
       </View>
-    </TouchableOpacity>
-  </ScrollView>
+
+    </ScrollView>
   );
 }
 
@@ -119,4 +124,4 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     marginTop: "2%",
   },
-})
+});

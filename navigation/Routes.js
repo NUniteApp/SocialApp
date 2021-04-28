@@ -17,14 +17,14 @@ import EmailConfirmationScreen from "../screens/auth-screens/EmailConfirmationSc
 // Imports for main tab screens
 import HomeScreen from "../screens/app-screens/home/HomeScreen";
 import ChatsScreen from "../screens/app-screens/chat/ChatsScreen";
-
 import TenancyScreen from "../screens/app-screens/tenancy/TenancyScreen";
 
 // Context Imports
 import { AuthContext } from "./AuthContext";
 import GenericPostScreen from "../screens/app-screens/home/GenericPostScreen";
 import PostOptionsScreen from "../screens/app-screens/home/PostOptionsScreen";
-
+import ReportPostScreen from "../screens/app-screens/home/ReportPostScreen";
+import ReportConfirmationScreen from "../screens/app-screens/home/ReportConfirmationScreen";
 
 // Profile Screens
 import ProfileScreen from "../screens/app-screens/profile/ProfileScreen";
@@ -33,6 +33,9 @@ import FriendsListScreen from "../screens/app-screens/profile/FriendsListScreen"
 import DeleteAccountScreen from "../screens/app-screens/profile/DeleteAccountScreen";
 import ManagePostsScreen from "../screens/app-screens/profile/ManagePostsScreen";
 import SearchProfileScreen from "../screens/app-screens/profile/SearchProfileScreen";
+import ProfileSettingsScreen from "../screens/app-screens/profile/ProfileSettingsScreen";
+
+
 
 // Initialize Navigators
 const Stack = createStackNavigator();
@@ -54,7 +57,8 @@ function StackHome() {
       <HomeStack.Screen name="Home" component={HomeScreen} />
       <HomeStack.Screen name="Generic Post" component={GenericPostScreen} />
       <HomeStack.Screen name="Post Options" component={PostOptionsScreen} />
-
+      <HomeStack.Screen name="Report Post" component={ReportPostScreen} />
+      <HomeStack.Screen name="Confirm Report" component={ReportConfirmationScreen} />
     </HomeStack.Navigator>
   )
 }
@@ -64,8 +68,9 @@ function StackProfile() {
     <ProfileStack.Navigator>
       <ProfileStack.Screen name="My Profile" component={ProfileScreen} />
       <ProfileStack.Screen name="Edit Profile" component={EditProfileScreen} />
-      <ProfileStack.Screen name="Post Options" component={PostOptionsScreen} />
       <ProfileStack.Screen name="Friend Lists" component={FriendsListScreen} />
+      <ProfileStack.Screen name="Profile Settings" component={ProfileSettingsScreen} />
+
     </ProfileStack.Navigator>
   )
 }

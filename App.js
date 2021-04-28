@@ -7,12 +7,17 @@
  */
 import 'react-native-gesture-handler';
 import React from 'react';
+import { Provider as PaperProvider } from 'react-native-paper';
+
 
 import Providers from './navigation';
 
 const App: () => React$Node = () => {
   return (
-    <Providers />
+    <PaperProvider>
+      <Providers />
+    </PaperProvider>
+
   );
 };
 
