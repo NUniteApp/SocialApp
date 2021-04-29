@@ -5,8 +5,6 @@ import { windowHeight, windowWidth } from "../utils/DeviceDimensions";
 
 function Post(props) {
   return (
-    <ScrollView>
-
       <View style={styles.postView}>
         {/* View for post options */}
         <TouchableOpacity onPress={() => {
@@ -59,7 +57,6 @@ function Post(props) {
         </TouchableOpacity>
       </View>
 
-    </ScrollView>
   );
 }
 

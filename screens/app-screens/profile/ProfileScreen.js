@@ -77,7 +77,7 @@ function ProfileScreen(props) {
           }}
         />
         <TouchableOpacity style={styles.button} onPress={async () => {
-
+          props.navigation.navigate("Post Categories");
         }}>
           <Text style={styles.text_black}>Post Something... </Text>
         </TouchableOpacity>

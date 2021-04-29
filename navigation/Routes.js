@@ -21,6 +21,7 @@ import TenancyScreen from "../screens/app-screens/tenancy/TenancyScreen";
 
 // Context Imports
 import { AuthContext } from "./AuthContext";
+// Home Screens
 import GenericPostScreen from "../screens/app-screens/home/GenericPostScreen";
 import PostOptionsScreen from "../screens/app-screens/home/PostOptionsScreen";
 import ReportPostScreen from "../screens/app-screens/home/ReportPostScreen";
@@ -34,8 +35,8 @@ import DeleteAccountScreen from "../screens/app-screens/profile/DeleteAccountScr
 import ManagePostsScreen from "../screens/app-screens/profile/ManagePostsScreen";
 import SearchProfileScreen from "../screens/app-screens/profile/SearchProfileScreen";
 import ProfileSettingsScreen from "../screens/app-screens/profile/ProfileSettingsScreen";
-
-
+import PostCategories from "../screens/app-screens/profile/PostCategories";
+import GenericPostCreationScreen from "../screens/app-screens/profile/GenericPostCreationScreen";
 
 // Initialize Navigators
 const Stack = createStackNavigator();
@@ -70,7 +71,8 @@ function StackProfile() {
       <ProfileStack.Screen name="Edit Profile" component={EditProfileScreen} />
       <ProfileStack.Screen name="Friend Lists" component={FriendsListScreen} />
       <ProfileStack.Screen name="Profile Settings" component={ProfileSettingsScreen} />
-
+      <ProfileStack.Screen name="Post Categories" component={PostCategories} />
+      <ProfileStack.Screen name="Generic Post Create" component={GenericPostCreationScreen} />
     </ProfileStack.Navigator>
   )
 }
