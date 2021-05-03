@@ -1,10 +1,10 @@
 import React from "react";
 import {Text} from 'react-native';
 
-function TenancyScreen(props) {
+function TenancyDetailsScreen(props) {
   return (
     <Text>This is the Tenancy Screen</Text>
   );
 }
 
-export default TenancyScreen;
+export default TenancyDetailsScreen;

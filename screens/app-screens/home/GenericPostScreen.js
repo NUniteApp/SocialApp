@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import NuniteLogoTop from "../../../components/NuniteLogoTop";
 import ScreenHeading from "../../../components/ScreenHeading";
@@ -6,8 +6,21 @@ import { windowHeight, windowWidth } from "../../../utils/DeviceDimensions";
 import CommentUsers from "../../../components/CommentUsers";
 import HorizontalRule from "../../../components/HorizontalRule";
 import CreateComment from "../../../components/CreateComment";
+import {ApiUrl} from "../../../utils/BackendApi";
+import moment from "moment";
+
 
 function GenericPostScreen(props) {
+
+  console.log(props.route.params.postInfo);
+  console.log("From Post Details...");
+  const [postInfo, setPostInfo] = useState(props.route.params.postInfo);
+
+
+  useEffect(() => {
+
+    } , [props.route.params.postInfo.post_id])
+
   return (
     <>
       <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
@@ -24,41 +37,25 @@ function GenericPostScreen(props) {
           {/*</View>*/}
           <Image
             style={styles.imageStyleDet}
-            source={require("../../../assets/random-numbers-dice.jpg")}
+            source={{uri: ApiUrl + postInfo.post_image_url }}
           />
 
           {/* Type of Post and Date / Time View */}
           <View style={styles.postInfoView}>
-            {/* View for the type of post */}
-            <View style={styles.postTypeView}>
-              <Text style={styles.postTypeText}> Generic Post </Text>
-            </View>
             {/* View for the date / time  */}
             <View style={styles.postDateTimeView}>
-              <Text style={styles.postDateTimeText}> Today 10:30 </Text>
+              <Text style={styles.postDateTimeText}> {moment(postInfo.post_date).calendar() }</Text>
             </View>
           </View>
           {/*  Post Details */}
           <View style={styles.postDetailsView}>
             <Text style={styles.titleTextWhite}>
-              River Tyne Bridge
+              {postInfo.post_title}
             </Text>
             <Text style={styles.descriptionTextWhite}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-              industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-              scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release
-              of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-              like Aldus PageMaker including versions of Lorem Ipsum.
+              {postInfo.post_description}
             </Text>
-            <Text style={styles.descriptionTextWhite}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-              industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-              scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release
-              of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-              like Aldus PageMaker including versions of Lorem Ipsum.
-            </Text>
+
           </View>
           <HorizontalRule />
           <View>
@@ -119,11 +116,11 @@ const styles = StyleSheet.create({
     // backgroundColor: 'cyan'
   },
   postDateTimeText: {
-    fontSize: 10,
+    fontSize: 14,
     color: "white",
   },
   postDateTimeView: {
-    width: "50%",
+    width: "100%",
     // backgroundColor: 'pink',
     alignItems: "flex-end",
   },

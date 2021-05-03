@@ -1,21 +1,61 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Image, StyleSheet, Text, TextInput, View, TouchableOpacity, ScrollView } from "react-native";
+import { Image, StyleSheet, Text, TextInput, View, TouchableOpacity, ScrollView, LogBox } from "react-native";
 import { windowHeight, windowWidth } from "../../../utils/DeviceDimensions";
 import Icon from "react-native-vector-icons/FontAwesome";
 import ProfilePicture from "react-native-profile-picture";
 import { AuthContext } from "../../../navigation/AuthContext";
 import Bio from "../../../components/bio";
 import Friends from "../../../components/Friends";
+import { useFocusEffect } from "@react-navigation/native";
+import axios from "axios";
+import { ApiUrl } from "../../../utils/BackendApi";
+import isEmpty from "../../../utils/isEmpty";
 
+
+const images = [
+  require("../../../assets/avatarFemale.png"),
+  require("../../../assets/avatarFemale2.png"),
+  require("../../../assets/avatarFemale3.png"),
+  require("../../../assets/avatarMale.png"),
+  require("../../../assets/avatarMale2.png"),
+  require("../../../assets/avatarMale3.png"),
+];
+
+const imageMapping = [
+  "avatarFemale.png" ,
+  "avatarFemale2.png" ,
+  "avatarFemale3.png" ,
+  "avatarMale.png" ,
+  "avatarMale2.png" ,
+  "avatarMale3.png" ,
+];
 
 function ProfileScreen(props) {
 
   const { authState } = useContext(AuthContext);
-  const [username, setUserName] = useState(authState.userName);
+  const [profileInformation, setProfileInformation ] = useState({});
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () => {
+        let data = {
+          user_id: authState.userId,
+        };
+        let resRq = await axios.post(ApiUrl + "api/userprofile", data);
+        // console.log(resRq.data.data[0]);
+        setProfileInformation(resRq.data.data[0]);
+        console.log(profileInformation);
+        console.log(isEmpty(profileInformation));
+      };
+
+      fetchData();
+
+    }, []),
+  );
 
   useEffect(() => {
-    console.log("username = " + username);
+    // console.log("username = " + username);
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
   }, []);
 
   return (
@@ -31,31 +71,53 @@ function ProfileScreen(props) {
         </View>
         {/*  Profile Picture enlarged */}
         <View style={styles.mainProfilePicStyle}>
-          <ProfilePicture
-            isPicture={true}
-            requirePicture={require("../../../assets/icons8-name-160.png")}
-            shape="circle"
-            width={windowWidth * 0.50}
-            height={windowWidth * 0.50}
-          />
+          {
+            isEmpty(profileInformation) ? (
+              <Text style={styles.textWhite}>Loading</Text>
+            ) : (
+              imageMapping.map((imgName, i) => {
+                  if(imgName === profileInformation.avatar_url) {
+                    return(
+                      <ProfilePicture
+                        isPicture={true}
+                        requirePicture={images[i]}
+                        shape="circle"
+                        width={windowWidth * 0.50}
+                        height={windowWidth * 0.50}
+                        key={i}
+                      />
+                    )
+                  }
+              })
+            )
+
+
+          }
+
+
         </View>
         {/*  View for the user name */}
         <View style={styles.userNameView}>
           <View>
-            <Text style={styles.userNameText}>{username}</Text>
+            <Text style={styles.userNameText}>{isEmpty(profileInformation) ? (
+              "Placeholder"
+            ): (
+              profileInformation.firstname + " " + profileInformation.lastname
+            )
+            }</Text>
           </View>
           <View style={styles.userNameIcon}>
             <TouchableOpacity
-            onPress={() => {
-              props.navigation.navigate("Profile Settings");
-            }}
+              onPress={() => {
+                props.navigation.navigate("Profile Settings");
+              }}
             >
               <Icon name="cog" size={30} color="gray" />
             </TouchableOpacity>
           </View>
         </View>
         {/*  Bio Component */}
-        <Bio />
+        <Bio profileData={profileInformation}/>
         {/*  Horizontal Rule */}
         <View
           style={{
@@ -133,5 +195,8 @@ const styles = StyleSheet.create({
     marginTop: 40,
     marginBottom: 20,
   },
-
+  textWhite: {
+    color: 'white',
+    fontSize: 18
+  }
 });

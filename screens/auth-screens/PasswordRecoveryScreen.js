@@ -44,7 +44,7 @@ function PasswordRecoveryScreen(props) {
         </View>
         <TouchableOpacity onPress={
           () => {
-            props.navigation.navigate("UsernameRecoveryScreen");
+            props.navigation.navigate('AuthStack', {screen: 'Recover Username', params: {something: "1"},});
           }
         }>
           <Text style={[styles.text, { textDecorationLine: "underline" } ]}>Forgot your username?</Text>

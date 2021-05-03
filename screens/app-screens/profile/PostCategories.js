@@ -28,7 +28,9 @@ function PostCategories(props) {
       </TouchableOpacity>
 
       {/* View Btn */}
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => {
+        props.navigation.navigate("Tenancy Post Create");
+      }}>
         <View style={styles.customBtnStyle}>
           <Text style={styles.textWhiteStrong}> Tenancy Post </Text>
           <View style={styles.textViewDesc}>
@@ -36,7 +38,6 @@ function PostCategories(props) {
             <Text style={styles.textWhiteNormal}> A tenancy post is anything that is specifically related to
               tenancy </Text>
           </View>
-
         </View>
       </TouchableOpacity>
 

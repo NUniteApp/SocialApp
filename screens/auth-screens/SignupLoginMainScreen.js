@@ -17,14 +17,14 @@ function SignupLoginMainScreen(props) {
 
       <TouchableOpacity style={styles.button} onPress={() => {
         console.log(props);
-        props.navigation.navigate('Sign In');
+        props.navigation.navigate('AuthStack', {screen: 'LoginScreen', params: {something: "1"},});
       }}>
         <Text  style={styles.text_black }>Login</Text>
       </TouchableOpacity>
       <Text style={styles.text}>OR</Text>
       <TouchableOpacity style={styles.button} onPress={() => {
         console.log(props);
-        props.navigation.navigate('Sign Up');
+        props.navigation.navigate('AuthStack', {screen: 'SignupScreen', params: {something: "1"},});
       }}>
         <Text  style={styles.text_black }>Sign Up</Text>
       </TouchableOpacity>

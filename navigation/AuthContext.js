@@ -74,6 +74,7 @@ export const AuthContextProvider = ({children}) => {
 
   const signOut = async (data) => {
     // Call dispatch to null the token
+    let removeUserToken = await AsyncStorage.removeItem("social-app-token");
     dispatch({ type: SIGN_OUT, token: null, userId: null });
     return true;
   };

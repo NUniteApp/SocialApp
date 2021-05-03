@@ -47,20 +47,11 @@ function Friends(props) {
   ]
 
 
-  const renderItem = ({ item }) => (
-      <ProfilePicture
-        isPicture={true}
-        requirePicture={require("../assets/icons8-name-160.png")}
-        shape="circle"
-        pictureStyle={{
-          marginRight: (windowWidth * 0.02),
-          marginBottom: (windowHeight * 0.01),
-          marginTop: (windowHeight * 0.02),
-        }}
-      />
-
-
-  );
+  // const renderItem = ({ item }) => (
+  //
+  //
+  //
+  // );
 
   return (
     <View style={styles.friendsViewStyle} >
@@ -78,18 +69,6 @@ function Friends(props) {
           </TouchableOpacity>
         </View>
       </View>
-    {/* Friends Icons Max 8 */}
-    <SafeAreaView>
-      <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        numColumns={4}
-        style={{alignSelf: 'center'}}
-      />
-    </SafeAreaView>
-
-
     </View>
   );
 };
@@ -120,6 +99,6 @@ const styles = StyleSheet.create({
   },
   gapStyle: {
     marginBottom: '5%'
-  }
+  },
 
 })

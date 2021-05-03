@@ -1,14 +1,22 @@
-import React from "react";
+import React, {useContext} from "react";
 import {View, Text, StyleSheet} from 'react-native';
 import Icon from "react-native-vector-icons/FontAwesome";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { windowWidth } from "../utils/DeviceDimensions";
+import {AuthContext} from "../navigation/AuthContext";
 
 
 function OptionsComp(props) {
+  const {signOut} = useContext(AuthContext);
+
   return (
     <TouchableOpacity onPress={() => {
-      props.navigation.navigate(props.navToScreenName);
+      if(props.navToScreenName) {
+        props.navigation.navigate(props.navToScreenName);
+      } else {
+        signOut();
+      }
+
     }}>
       <View style={styles.optionCompStyle}>
         {/* for the icon */}

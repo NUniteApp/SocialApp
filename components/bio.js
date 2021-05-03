@@ -1,13 +1,18 @@
 import React from "react";
 import {View, Text, StyleSheet} from "react-native";
 import { windowHeight, windowWidth } from "../utils/DeviceDimensions";
+import isEmpty from "../utils/isEmpty";
+
 
 function Bio(props) {
   return (
     <View style={styles.bioViewStyle}>
-      <Text style={styles.bioText} >Bio..... </Text>
-      <Text style={styles.bioText} >w19024535 </Text>
-      <Text style={styles.bioText} >Computer Science </Text>
+      <Text style={styles.bioText} >{isEmpty(props.profileData) ? ("Bio...") :
+        (props.profileData.bio)} </Text>
+      <Text style={styles.bioText} >{isEmpty(props.profileData) ? ("Student Id...") :
+        (props.profileData.student_id)}</Text>
+      <Text style={styles.bioText} >{isEmpty(props.profileData) ? ("Student Id...") :
+        (props.profileData.course)} </Text>
     </View>
   );
 }

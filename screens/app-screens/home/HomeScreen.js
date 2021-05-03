@@ -1,12 +1,67 @@
-import React from "react";
-import { Image, StyleSheet, Text, TextInput, View, TouchableOpacity, ScrollView } from "react-native";
+import React, { useState, useContext, useEffect } from "react";
+import { RefreshControl, Image, StyleSheet, Text, TextInput, View, TouchableOpacity, ScrollView } from "react-native";
 import { windowHeight, windowWidth } from "../../../utils/DeviceDimensions";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Post from "../../../components/post";
+import { useFocusEffect } from "@react-navigation/native";
+import axios from "axios";
+import { AuthContext } from "../../../navigation/AuthContext";
+import { ApiUrl } from "../../../utils/BackendApi";
 
 function HomeScreen(props) {
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [randomPosts, setRandomPosts] = useState([]);
+  const { authState } = useContext(AuthContext);
+  const [makeEffect, setMakeEffect] = useState("initial");
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let data = {
+        user_id: authState.userId,
+      };
+      let resRq = await axios.post(ApiUrl + "api/random_posts", data);
+      console.log(resRq.data);
+      setRandomPosts(resRq.data.data);
+      console.log(randomPosts);
+    };
+
+    fetchData();
+
+  }, []);
+  const onRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+    setRandomPosts([]);
+      try {
+        let data = {
+          user_id: authState.userId,
+        };
+        let response = await axios.post(ApiUrl + 'api/random_posts', data);
+        console.log(response.data);
+        setRandomPosts(response.data.data);
+        let r = Math.random().toString(36).substring(7);
+        setMakeEffect(r);
+        setRefreshing(false)
+      } catch (error) {
+        console.error(error);
+      }
+
+  }, [refreshing]);
+
+  // useEffect(() => {
+  //
+  // }, [makeEffect])
+
+
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                  />
+                }
+    >
       <View style={styles.container}>
         {/* View for the logo image*/}
         <View style={styles.nunite_logo_view}>
@@ -66,10 +121,26 @@ function HomeScreen(props) {
             </View>
           </TouchableOpacity>
         </View>
+        <View>
 
-      {/*  Post  */}
-      <Post navigation={props.navigation} />
 
+          {/*  Post  */}
+          {
+            randomPosts.length === 0 ? (
+              <Text style={styles.textWhite}>Loading</Text>
+            ) : (
+              randomPosts.map((post, i) =>
+                (
+                  <View key={i} style={styles.postTopMargin }>
+                    <Post navigation={props.navigation} singlePost={post}
+                          fromLocation="Generic" />
+                  </View>
+
+                ),
+              )
+            )
+          }
+        </View>
       </View>
     </ScrollView>
   );
@@ -139,5 +210,12 @@ const styles = StyleSheet.create({
     color: "#424242",
     width: (windowWidth * .80),
   },
+  textWhite: {
+    color: "white",
+    fontSize: 18,
+  },
+  postTopMargin: {
+    marginTop: (windowHeight * 0.02)
+  }
 
 });

@@ -169,7 +169,7 @@ function LoginScreen(props) {
         </View>
         <TouchableOpacity onPress={
           () => {
-            props.navigation.navigate("PasswordRecoveryScreen");
+            props.navigation.navigate('AuthStack', {screen: 'Recover Password', params: {something: "1"},});
           }
         }>
           <Text style={[styles.text, { textDecorationLine: "underline" }]}>Forgot your password?</Text>
@@ -187,7 +187,7 @@ function LoginScreen(props) {
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => {
-        props.navigation.navigate("SignUpScreen");
+        props.navigation.navigate('AuthStack', {screen: 'SignupScreen', params: {something: "1"},});
       }}>
         <Text style={[styles.text, { textDecorationLine: "underline" }]}>Sign Up instead</Text>
       </TouchableOpacity>

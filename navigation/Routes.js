@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, } from "react";
+import React, { useContext, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Icon from "react-native-vector-icons/FontAwesome5";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// Import Screens
+// Import Auth Screens
 import SplashScreen from "../screens/auth-screens/SplashScreen";
 import SignupLoginMainScreen from "../screens/auth-screens/SignupLoginMainScreen";
 import LoginScreen from "../screens/auth-screens/LoginScreen";
@@ -13,15 +13,12 @@ import SignupScreen from "../screens/auth-screens/SignupScreen";
 import PasswordRecoveryScreen from "../screens/auth-screens/PasswordRecoveryScreen";
 import UsernameRecoveryScreen from "../screens/auth-screens/UsernameRecoveryScreen";
 import EmailConfirmationScreen from "../screens/auth-screens/EmailConfirmationScreen";
-
-// Imports for main tab screens
-import HomeScreen from "../screens/app-screens/home/HomeScreen";
-import ChatsScreen from "../screens/app-screens/chat/ChatsScreen";
-import TenancyScreen from "../screens/app-screens/tenancy/TenancyScreen";
+import CreateUserProfile from "../screens/auth-screens/CreateUserProfile";
 
 // Context Imports
 import { AuthContext } from "./AuthContext";
 // Home Screens
+import HomeScreen from "../screens/app-screens/home/HomeScreen";
 import GenericPostScreen from "../screens/app-screens/home/GenericPostScreen";
 import PostOptionsScreen from "../screens/app-screens/home/PostOptionsScreen";
 import ReportPostScreen from "../screens/app-screens/home/ReportPostScreen";
@@ -37,19 +34,23 @@ import SearchProfileScreen from "../screens/app-screens/profile/SearchProfileScr
 import ProfileSettingsScreen from "../screens/app-screens/profile/ProfileSettingsScreen";
 import PostCategories from "../screens/app-screens/profile/PostCategories";
 import GenericPostCreationScreen from "../screens/app-screens/profile/GenericPostCreationScreen";
+import TenancyPostCreationScreen from "../screens/app-screens/profile/TenancyPostCreationScreen";
+
+//Tenancy Screens
+import TenancyPostScreen from "../screens/app-screens/tenancy/TenancyPostScreen";
+import TenancyDetailsScreen from "../screens/app-screens/tenancy/TenancyDetailsScreen";
 
 // Initialize Navigators
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
+const AuthStack = createStackNavigator();
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const TenancyStack = createStackNavigator();
 
-
-
 const navOptionHandler = () => ({
-  headerShown: false
+  headerShown: false,
 });
 
 function StackHome() {
@@ -61,7 +62,7 @@ function StackHome() {
       <HomeStack.Screen name="Report Post" component={ReportPostScreen} />
       <HomeStack.Screen name="Confirm Report" component={ReportConfirmationScreen} />
     </HomeStack.Navigator>
-  )
+  );
 }
 
 function StackProfile() {
@@ -73,16 +74,26 @@ function StackProfile() {
       <ProfileStack.Screen name="Profile Settings" component={ProfileSettingsScreen} />
       <ProfileStack.Screen name="Post Categories" component={PostCategories} />
       <ProfileStack.Screen name="Generic Post Create" component={GenericPostCreationScreen} />
+      <ProfileStack.Screen name="Tenancy Post Create" component={TenancyPostCreationScreen} />
+      <ProfileStack.Screen name="Manage Posts" component={ManagePostsScreen} />
+      <ProfileStack.Screen name="Search Profile" component={SearchProfileScreen} />
+      <ProfileStack.Screen name="Delete Account" component={DeleteAccountScreen} />
     </ProfileStack.Navigator>
-  )
+  );
+}
+
+function StackTenancy() {
+  return (
+    <TenancyStack.Navigator>
+      <TenancyStack.Screen name="Tenancy Posts Screen" component={TenancyPostScreen} />
+      <TenancyStack.Screen name="Tenancy Details Screen" component={TenancyDetailsScreen} />
+    </TenancyStack.Navigator>
+  );
 }
 
 function Routes(props) {
 
   const { authState, restoreToken } = useContext(AuthContext);
-
-
-
 
   // Similar to componentDidMount method i.e. useEffect
   useEffect(() => {
@@ -117,73 +128,79 @@ function Routes(props) {
     return (
       <BottomTab.Navigator
         tabBarOptions={{
-          activeTintColor: '#050505',
+          activeTintColor: "#050505",
         }}>
         <BottomTab.Screen name="Home" children={StackHome}
-                    options={{
-                      tabBarLabel: 'Home',
-                      tabBarIcon: () => (
-                        <Icon name="home" size={30} color="#050505" />
-                      ),
-                    }}/>
-        <BottomTab.Screen name="Chat" component={ChatsScreen}
-                    options={{
-                      tabBarLabel: 'Chat',
-                      tabBarIcon: () => (
-                        <Icon name="comment" size={30} color="#050505" solid/>
-                      ),
-                    }}
-        />
+                          options={{
+                            tabBarLabel: "Home",
+                            tabBarIcon: () => (
+                              <Icon name="home" size={30} color="#050505" />
+                            ),
+                          }} />
         <BottomTab.Screen name="Profile" component={StackProfile}
-                    options={{
-                      tabBarLabel: 'Profile',
-                      tabBarIcon: () => (
-                        <Icon name="user" size={30} color="#050505" solid/>
-                      ),
-                    }}/>
-        <BottomTab.Screen name="Tenancy" component={TenancyScreen}
-                    options={{
-                      tabBarLabel: 'Tenancy',
-                      tabBarIcon: () => (
-                        <Icon name="door-open" size={30} color="#050505" solid/>
-                      ),
-                    }}/>
+                          options={{
+                            tabBarLabel: "Profile",
+                            tabBarIcon: () => (
+                              <Icon name="user" size={30} color="#050505" solid />
+                            ),
+                          }} />
+        <BottomTab.Screen name="Tenancy" component={StackTenancy}
+                          options={{
+                            tabBarLabel: "Tenancy",
+                            tabBarIcon: () => (
+                              <Icon name="door-open" size={30} color="#050505" solid />
+                            ),
+                          }} />
       </BottomTab.Navigator>
-    )
+    );
+  }
+
+
+  function AuthStackNavi() {
+    return (
+      <AuthStack.Navigator>
+        <AuthStack.Screen name="SignupLoginMainScreen" component={SignupLoginMainScreen}
+                          options={{
+                            title: "Get Started",
+                          }}
+        />
+        <AuthStack.Screen
+          name="LoginScreen"
+          component={LoginScreen}
+          options={{
+            title: "Sign in",
+            // When logging out, a pop animation feels intuitive
+            animationTypeForReplace: authState.isSignout ? "pop" : "push",
+          }}
+        />
+        <AuthStack.Screen name="SignupScreen" component={SignupScreen}
+                          options={{
+                            title: "Sign Up",
+                          }}
+                          initialParams={{ name: "123" }}
+        />
+        <AuthStack.Screen name="Recover Password" component={PasswordRecoveryScreen} />
+        <AuthStack.Screen name="Recover Username" component={UsernameRecoveryScreen} />
+        <AuthStack.Screen name="Email Confirmation" component={EmailConfirmationScreen} />
+        <AuthStack.Screen name="Create User Profile" component={CreateUserProfile} />
+      </AuthStack.Navigator>
+    );
   }
 
   // Based on the user value -- return the appropriate stack to the user
   return (
-      <NavigationContainer>
-        <Stack.Navigator>
-          {authState.isLoading ? (
-            <Stack.Screen name="Splash" component={SplashScreen} />
-          ) : authState.userToken == null ? (
+    <NavigationContainer>
+      <Stack.Navigator>
+        {authState.isLoading ? (
+          <Stack.Screen name="Splash" component={SplashScreen} />
+        ) : authState.userToken == null ? (
+          <Stack.Screen name="AuthStack" component={AuthStackNavi} options={navOptionHandler} />
+        ) : (
+          <Stack.Screen name="StartApp" component={StartApp} options={navOptionHandler} />
+        )}
 
-            <>
-              <Stack.Screen name="Get Started" component={SignupLoginMainScreen} />
-              <Stack.Screen
-                name="Sign In"
-                component={LoginScreen}
-                options={{
-                  title: 'Sign in',
-                  // When logging out, a pop animation feels intuitive
-                  animationTypeForReplace: authState.isSignout ? 'pop' : 'push',
-                }}
-              />
-              <Stack.Screen name="Sign Up" component={SignupScreen}  />
-              <Stack.Screen name="Recover Password" component={PasswordRecoveryScreen} />
-              <Stack.Screen name="Recover Username" component={UsernameRecoveryScreen} />
-              <Stack.Screen name="Email Confirmation" component={EmailConfirmationScreen} />
-            </>
-          ) : (
-            <>
-              <Stack.Screen name="Home" component={StartApp} options={navOptionHandler} />
-            </>
-          ) }
-
-        </Stack.Navigator>
-      </NavigationContainer>
+      </Stack.Navigator>
+    </NavigationContainer>
 
   );
 }
