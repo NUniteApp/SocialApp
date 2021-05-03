@@ -69,7 +69,7 @@ Thanks.
 
 ## Running the Production / Release APK
 
-If you want to just run the android application directly on your phone. You can go to the NUnite APK directory and find
+If you want to just run the android application directly on your phone. You can go to the NuniteAPK directory and find
 the apk-release.aab file. 
 
 Install that apk-release.aab file on your phone by just copying it on your phone. Follow the installation instruction that 
