@@ -67,7 +67,18 @@ w19024535@northumbria.ac.uk OR sohaibfarooq1998@hotmail.com
 
 Thanks.
 
+## Running the Production / Release APK
 
+If you want to just run the android application directly on your phone. You can go to the NUnite APK directory and find
+the apk-release.aab file. 
+
+Install that apk-release.aab file on your phone by just copying it on your phone. Follow the installation instruction that 
+your phone gives it to you. Skip the security warnings if there are any. 
+
+Once you have opened the app use the same credentials that are given above i.e. 
+
+Email:  w19687678@northumbria.ac.uk
+Password: 123456
 
 
 
